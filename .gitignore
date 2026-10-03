@@ -1,0 +1,6 @@
+# Local environment variables
+.env
+
+# Go build output
+bin/
+*.exe
