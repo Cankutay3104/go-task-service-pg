@@ -12,6 +12,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -71,6 +72,12 @@ func main() {
 	mux.HandleFunc("GET /tasks", handler.ListTasks)
 	mux.HandleFunc("PUT /tasks/{id}", handler.UpdateTask)
 	mux.HandleFunc("DELETE /tasks/{id}", handler.DeleteTask)
+
+	mux.HandleFunc("/debug/pprof/", pprof.Index)
+	mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+	mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
 
 	server := &http.Server{
 		Addr:         port,
